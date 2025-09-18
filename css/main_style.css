@@ -1,3 +1,10 @@
+/*
+Colorblind safe color palette from colorbrew.org
+#bdbdbd - light gray
+#2b8cbe - blue
+#8856a7 - purple
+*/
+
 body{
   background-color: #bdbdbd;
   color: #2b8cbe;
