@@ -3,12 +3,47 @@ Colorblind safe color palette from colorbrew.org
 #bdbdbd - light gray
 #2b8cbe - blue
 #8856a7 - purple
+#ffeda0 - yellow
+#dd1c77 - pink
+
 */
 
 body{
   background-color: #bdbdbd;
   color: #2b8cbe;
   text-align: center;
+  margin: 0;
 }
 h1 {
-  color:#8856a7
+  color:#addd8e;
+  padding:5px;
+  margin: 0;
+}
+
+#body-container {
+  background-color: #ffeda0;
+  max-width: 1000px;
+  margin: auto;
+  min-height: 100vh;
+  border: 2px solid#dd1c77;
+  border-radius: 25px;
+  overflow: hidden;
+}
+#header {
+  background-color: #2b8cbe;
+}
+#profile-picture {
+  float: left;
+}
+
+#welcome-text {
+  padding-top:25px;
+  font-size:25px;
+}
+
+#hobbies {
+  text-align: left;
+  font-size: 25px;
+  position:relative;
+  left:50px;
+}
