@@ -2,15 +2,17 @@
 Colorblind safe color palette from colorbrew.org
 #bdbdbd - light gray
 #2b8cbe - blue
-#8856a7 - purple
 #ffeda0 - yellow
 #dd1c77 - pink
+#2b8cbe - lime green
 
 */
 
 body{
   background-color: #bdbdbd;
   color: #2b8cbe;
+  text-align: center;
+  text-align: center;
   text-align: center;
   margin: 0;
 }
@@ -43,7 +45,99 @@ h1 {
 
 #hobbies {
   text-align: left;
-  font-size: 25px;
-  position:relative;
+  font-size:25px;
+  position: relative;
   left:50px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* for the body sector:
+  background-color:#bdbdbd;
+    Sets the page background to a Lightgray color
+    and completely fills the page.
+  color: #2b8cbe;
+    Changes the Text to a lightblue color
+    Includes all Text in page
+  text-align: center;
+    moves all text and picture to the center of
+    the page
+  margin: 0;
+    Nothing appears to change at all throughout the page
+
+    for the heading sector:
+    color:#addd8e;
+      this changes the heading text color to a lime green color
+      only the heading text changes color
+    padding:5px;
+      5px padding increased the space above the picture
+    margin: 0;
+      0 margin made the space above the picture a lot
+      more narrow
+
+      for the body container:
+      background-color: #ffeda0;
+        This changes completely the background color to a light yellow
+        but leaves a strip of lightgray at the bottom of the page
+      ax-width: 1000px
+        making the width 1000px narrows down the light yellow color
+        in the page and the lightgray background color is more noticeable
+        on the right side and at the bottom of the page
+      margin: auto;
+        the shifts completely the light yellow square to the
+        middle of the page and leaves lightgray background color
+        for the left, right and bottom sides
+      min-height: 100vh;
+        no changes occurs across the whole page
+      border: 2px solid#dd1c77;
+        this creates a pink square border around the yellow
+        background including up, down, right and left sides
+      border-radius: 25px;
+        This creates a soft curved corner around the pink border
+        this includes the four edges of the yellow square
+      overflow: hidden;
+        nothing happens acorss the whole page
+
+      for the header section:
+      background-color: #2b8cbe;
+        Changing the background color of the header section
+        This changes the top part of the image to a light blue color
+
+      for the profile picture section
+      float: left;
+        This action complretly shifts the "welcome to my webpage" section and
+        the "hobbies" section to the right side of the image the listing numbers
+        also overlap with the image
+
+      for the welcome text section:
+      padding-top:25px;
+        This action makes the space on top of the "welcome to my webpage" section
+        larger in height
+      font-size:25px;
+        This changes the font size of "welcome to my webpage" section
+        to a bigger font and takes more space
+
+      for the hobbies section:
+      text-align: left;
+        This action shifts the hobbies section with the list closer
+        to the right side of the image and placing it on the edge of the image
+      font-size: 25px;
+        This action makes the font size of the hobbies section including the
+        list bigger.
+      position:relative;
+        This action does not do anything across the entire page
+      left:50px;
+        This action completely shifts the hobbies sections including the listing numbers
+        more over to the right side of the image making the listing numbers not
+        overlap with the image anymore
