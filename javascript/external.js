@@ -14,6 +14,7 @@
 // user_name = window.prompt("Please enter your name","Type your name here");
 // document.write(user_name);
 
+
 // a = 22;
 // const b = 33;
 // document.writeln(a+b);
@@ -22,16 +23,22 @@
 // document.writeln("<br>");
 // document.writeln(a += b);
 
-document.writeln("<button onclick='condition()'>Conditional Test</button>");
-function condition()
+// document.writeln("<button onclick='condition()'>Conditional Test</button>");
+// function condition()
+// }
+//   x = confirm("Are you sure you want to proceed?");
+//   if(x)
+//   {
+//     document.writeln("You chose Okay!");
+//   }
+//   else
+//   {
+//     document.writen("You chose Cancel!");
+//   }
+// }
+
+arr = ["Mael","Eric","Randall","James"];
+for (var i=0; i < arr.length; i++)
 {
-  x = confirm("Are you sure you want to proceed?");
-  if(x)
-  {
-    document.writeln("You chose Okay!");
-  }
-  else
-  {
-    document.writeln("You chose Cancel!");
-  }
+  document.writeln(arr[i],"<br>");
 }
