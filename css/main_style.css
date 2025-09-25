@@ -52,6 +52,15 @@ h1 {
 
 
 
+#copyright {
+bottom: 20px;
+margin: 0;
+padding:0;
+text-align: center;
+position: relative;
+left:50%;
+transform: translateX(-50%) translateY(-50%);
+}
 
 
 
@@ -142,4 +151,4 @@ h1 {
         more over to the right side of the image making the listing numbers not
         overlap with the image anymore
 
-*/ 
+*/
