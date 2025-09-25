@@ -23,3 +23,7 @@ for (var i=0; i < arr.length; i++)
 */
 var user_name;
 user_name = window.prompt("Enter your Name");
+
+if(user_name) {
+  document.getElementById("namechange").innerText = "Hello, " + "Welcome " + user_name + "!";
+}
