@@ -21,9 +21,20 @@ for (var i=0; i < arr.length; i++)
   document.writeln(arr[i],"<br>");
 }
 */
-var user_name;
+/*
 user_name = window.prompt("Enter your Name");
 
 if(user_name) {
   document.getElementById("namechange").innerText = "Hello, " + "Welcome " + user_name + "!";
 }
+*/
+function welcome()
+{
+  let a = "Please enter your name.";
+  let b = "Type your name here.";
+//A prompt box is used to prompt users to input a value before entering a page.
+  user_name = window.prompt(a, b);
+  message = "<hl>Hello, welcome to my webpage, " + user_name + "!</hl>"
+  return message
+}
+document.write(welcome());
