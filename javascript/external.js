@@ -27,6 +27,17 @@ if(user_name) {
   document.getElementById("namechange").innerText = "Hello, " + "Welcome " + user_name + "!";
 }
 */
+
+var webmaps =
+[
+  ["Mapbox", "https://www.mapbox.com/navigation",
+   "Mapbox creates and combines data.<br>Mapbox allows customization of the interface.<br>It supports navigation, routing, and data visualization.<br>The user interface is moderately intuitive."],
+  ["OpenStreetMap", "https://www.openstreetmap.org/#map=9/43.646/-92.966&layers=C",
+   "OpenStreetMap is an open, free data source.<br>It allows for geocoding, routing, and editing.<br>The user interface is easy to use with quick zoom in and out."]
+];
+
+
+
 function welcome()
 {
   let a = "Please enter your name.";
@@ -41,12 +52,12 @@ document.write(welcome());
 function webmap_table()
 {
   document.write("<table width=100%>");
-  for (var row=0; row < 2; row++)
+  for (var row=0; row < webmaps.length; row++)
   {
     document.write("<tr>");
-    for (var column=0; column <3; column++)
+    for (var column=0; column < webmaps[0].length; column++)
     {
-      document.write("<td>" + row + "," + column + "</td>");
+      document.write("<td>" + webmaps[row][column] + "</td>");
     }
     document.write("</tr>");
   }
