@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content = "initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <link rel = "stylesheet" href = "https://js.arcgis.com/4.21/esri/themes/light/main.css"/>
+  <script src = "https://js.arcgis.com/4.21/"></script>
+  <style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    html, body, #map {
+        height: 100%;
+        width: 100%;
+    }
+/* style for dropdown menu button */
+    .dropdown {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+    }
+    .dropbutton {
+      background-color: white;
+      color: black;
+      padding: 8px 12px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #f9f9f9;
+      min-width: 200px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      padding: 12px 16px;
+
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+
+/* style for query box */
+      #optionsDiv {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 99;
+        width: 200px;
+      }
+
+/* style for copyright footer */
+    #copyright {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      padding: 5px;
+      font-size: 12px;
+      z-index: 9999;
+    }
+</style>
+</head>
+
+
+
+<body>
+  <h1 style="text-align:center; margin-top:10px; ">Boston Neighborhoods Map</h1>
+
+<!-- create a dropdown button to redirect to a seperate github page -->
+  <div class="dropdown">
+    <button class="dropbutton">Menu</button>
+  <div class="dropdown-content">
+    <a href ="https://github.com/stephperez-byte/mar688.github.io/blob/main/basemap_gallery.html" target="_blank">Base Map</a>
+    <a href ="https://github.com/stephperez-byte/mar688.github.io/blob/main/dynamic_layers.html" target="_blank">Dynamic Layer</a>
+    <a href ="https://github.com/stephperez-byte/mar688.github.io/blob/main/on_event.html" target="_blank">On Event</a>
+    <a href ="https://github.com/stephperez-byte/mar688.github.io/blob/main/query_task.html" target="_blank">Query Task</a>
+    <a href ="https://github.com/stephperez-byte/mar688.github.io/blob/main/simple_mapping.html" target="_blank">Simple Mapping</a>
+    <a href ="https://github.com/stephperez-byte/mar688.github.io/blob/main/tile_layer.html" target="_blank">Tile Layer</a>
+  </div>
+</div>
+
+<!-- wrap id map into map container -->
+  <div id="mapContainer" style="position: relative; height: 90vh; width: 100%;">
+    <div id="map" style="height: 100%; width: 100%;"></div>
+
+
+<!--create options in query box to select and assign unique ID -->
+  <div id="optionsDiv" class="esri-widget">
+    <h3>Boston Neighborhoods</h3>
+    <select id="attSelect">
+      <option value="ACRES">Acres Size</option>
+    </select>
+    <select id="signSelect">
+      <option value=">">is greater than</option>
+      <option value="<">is less than</option>
+    </select>
+    <select id="valSelect">
+      <option value="1000">1000</option>
+      <option value="1500">1500</option>
+      <option value="3000">3000</option>
+     </select><br><br>
+
+<!-- create a do query button -->
+     <button id="doQuery">Run Query</button>
+     <p><span id="printResults"></span></p>
+   </div>
+
+<!--create a unique id for copyright footer-->
+    <div id="copyright"></div>
+
+    <script>
+      //declares a date
+      var today = new Date();
+      //declares the variable year to get the current year we are in
+      var year = today.getFullYear();
+      // displays the results of "copyright" followed by the copyright symbol followed by the current year you declared in last line code
+      document.getElementById("copyright").innerHTML =
+    "Copyright &copy; " + year + " Stephany Perez. All rights reserved.";
+      </script>
+
+<script>
+    require(["esri/Map", "esri/views/MapView", "esri/layers/TileLayer", "esri/layers/FeatureLayer", "esri/layers/GraphicsLayer", "esri/tasks/support/Query", "dojo/on", "dojo/dom",],
+    function(Map, MapView, TileLayer, FeatureLayer, GraphicsLayer, Query, on, dom ) {
+
+//Creates a new map with a basemap
+      var map = new Map({
+        basemap: "dark-gray-vector",
+      });
+
+//creates a new feature layer with a boston feature server
+      var neighborhoodLayer = new FeatureLayer({
+        url:"https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Boston_Neighborhoods/FeatureServer"
+      });
+      map.add(neighborhoodLayer);
+//creates and adds the Boston parcel tile layer
+      var parcelTile = new TileLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Boston_2017_Parcel_data/MapServer"
+      });
+      map.add(parcelTile);
+
+//creates a new graphic layer
+      var resultsLayer = new GraphicsLayer();
+      map.add(resultsLayer);
+
+//centers the map view into set boston coordinates
+      var view = new MapView({
+        container: "map",
+        map: map,
+        center: [-71.0589, 42.3601], // Boston, MA
+        zoom: 12
+
+       });
+//creates a popup that includes the neighborhood name and acre size name
+       var popupTemplate ={
+         title: "{NAME}",
+         content: "<b>Neighborhood:" + "</b> {NAME} " + "<br><b>Acre Size:</b> {ACRES}"
+       };
+
+
+//creates an attribute query box for boston neighborhoods layer
+       function doQuery() {
+         resultsLayer.removeAll();
+//if the popup is visible it closes it
+         if (view.popup.visible) {
+           view.popup.close();
+         }
+//creates new query from the nighborhood layer
+        const query = neighborhoodLayer.createQuery();
+//lets user select the previous declared "attSelect", "signSelect", "valSelect"
+        var attributeName = dom.byId("attSelect").value;
+        var sign = dom.byId("signSelect").value;
+        var val = dom.byId("valSelect").value;
+
+//takes the attribute, signSelect, and val selections and puts into one condition
+          query.where = attributeName + " " + sign + " " + val;
+//lets geometry be displayed of the results
+          query.returnGeometry = true;
+          query.outFields = ["*"];
+//runs the query selected on the neighborhood feature layer
+          neighborhoodLayer.queryFeatures(query).then(function(response) {
+//says if there is no match to dosplay no results found
+            if (response.features.length === 0) {
+              document.getElementById("printResults").innerHTML = "No results found!";
+              return;
+            }
+//it applies a popup for each feature
+          response.features.forEach(function(feature) {
+          feature.popupTemplate = popupTemplate;
+          });
+//adds the results to the graphic layer
+          resultsLayer.addMany(response.features);
+//zooms up close the results and opens a popup
+          view.goTo(response.features).then(() => {
+            view.popup.open({
+              features: response.features,
+        featureMenuOpen: true,
+        updateLocationEnabled: true
+      });
+    });
+  });
+}
+//says when the do query button is clicked to run the function
+on(dom.byId("doQuery"), "click", doQuery);
+});
+
+</script>
+</body>
+</html>
